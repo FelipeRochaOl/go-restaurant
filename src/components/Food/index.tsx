@@ -31,17 +31,17 @@ const Food: React.FC<IProps> = ({
     try {
       await api.put(`/foods/${food.id}`, {
         ...food,
-        available: !isAvailable
-      })
+        available: !isAvailable,
+      });
 
-      setIsAvailable(!isAvailable)
-    } catch(err) {
-      console.log(err)
+      setIsAvailable(!isAvailable);
+    } catch (err) {
+      console.log(err);
     }
   }
 
   function setEditingFood(): void {
-    handleEditFood(food)
+    handleEditFood(food);
   }
 
   return (
