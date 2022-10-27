@@ -4,7 +4,7 @@ Challenge 04 rocketseat ignite, [link](https://go-restaurant.felipe-rocha.com)
 
 Notion: [link](https://www.notion.so/Desafio-02-Refactoring-de-classes-e-typescript-4571541e7f8c4799bd191b6cfb53802c)
 
-[![Watch the video](https://cdn.loom.com/sessions/thumbnails/5e1a4567f5924f4c9fbfe28b5e122960-with-play.gif)
+![Watch the video](https://cdn.loom.com/sessions/thumbnails/cab5f1ed5baf4db887d9f79602e0f3de-with-play.gif)
 
 ## Technologies used
 <div style="display:inline-block">
