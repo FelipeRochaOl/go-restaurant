@@ -1,3 +1,46 @@
+# Project Ignite Rockets
+
+Challenge 04 rocketseat ignite, [link](https://go-restaurant.felipe-rocha.com)
+
+Notion: [link](https://www.notion.so/Desafio-02-Refactoring-de-classes-e-typescript-4571541e7f8c4799bd191b6cfb53802c)
+
+[![Watch the video](https://cdn.loom.com/sessions/thumbnails/05198741daff4ca094ddae8146049f60-with-play.gif)
+
+## Technologies used
+<div style="display:inline-block">
+<img align="center" alt="Typescript" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg">
+<img align="center" alt="React" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
+<img align="center" alt="Eslint" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/eslint/eslint-original.svg">
+<img align="center" alt="Yarn" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/yarn/yarn-original.svg">
+<img align="center" alt="Vscode" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vscode/vscode-original.svg">
+</div>
+
+---
+
+## Important:
+
+To run in development environment:
+```zsh
+yarn server
+yarn start
+```
+
+To run in production environment:
+```zsh
+yarn build
+```
+
+To run tests:
+```zsh
+yarn test
+```
+
+---
+
+![tentocats](https://octodex.github.com/images/tentocats.jpg)
+
+---
+
 <img alt="GoStack" src="https://storage.googleapis.com/golden-wind/bootcamp-gostack/header-desafios-new.png" />
 
 <h3 align="center">
