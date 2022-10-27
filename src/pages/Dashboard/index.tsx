@@ -30,7 +30,6 @@ const Dashboard: React.FC = () => {
       const { data } = await api.get('/foods');
       setFoods(data);
     }
-
     loadFoods();
   }, []);
 
@@ -42,7 +41,6 @@ const Dashboard: React.FC = () => {
         ...food,
         available: true,
       });
-
       setFoods([...foods, response.data]);
     } catch (err) {
       console.log(err);
@@ -57,12 +55,9 @@ const Dashboard: React.FC = () => {
         ...editingFood,
         ...food,
       });
-
       const updatedFoods = foods.map(mapFood =>
         mapFood.id === editingFood.id ? { ...response.data } : mapFood,
       );
-      console.log(updatedFoods);
-
       setFoods(updatedFoods);
     } catch (err) {
       console.log(err);
@@ -72,7 +67,6 @@ const Dashboard: React.FC = () => {
   async function handleDeleteFood(id: number): Promise<void> {
     try {
       await api.delete(`/foods/${id}`);
-
       setFoods(foods.filter(food => food.id !== id));
     } catch (err) {
       console.log(err);
