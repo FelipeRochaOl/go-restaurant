@@ -1,12 +1,8 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-param-reassign */
 import { Handler } from '@netlify/functions';
 import { Event } from '@netlify/functions/dist/function/event';
 import { foods } from '../../server.json';
-
-interface IFoodProps {
-  foodsData: IFoodPlate[];
-  event: Event;
-}
 
 interface IFoodPlate {
   id: number;
@@ -17,33 +13,37 @@ interface IFoodPlate {
   available: boolean;
 }
 
-const createFood = ({
-  foodsData,
-  event,
-}: IFoodProps): IFoodPlate[] | IFoodPlate => {
-  if (!event.body) return foodsData;
+const storage: IFoodPlate[] = [];
+
+const createFood = (event: Event): IFoodPlate[] | IFoodPlate => {
+  if (!event.body) return storage;
   const food: IFoodPlate = JSON.parse(event.body);
-  foodsData.push(food);
+  const id = storage.length + 1;
+  food.id = id;
+  storage.push(food);
   return food;
 };
 
-const selectFood = ({
-  foodsData,
-  event,
-}: IFoodProps): IFoodPlate | undefined => {
+const selectFood = (event: Event): IFoodPlate | undefined => {
   const urlParts = event.path.split('/');
   const id = Number(urlParts[urlParts.length - 1]);
   if (!Number.isNaN(id)) {
-    return foodsData.find(product => product.id === id);
+    return storage.find(product => product.id === id);
   }
   return undefined;
 };
 
-const deleteFood = ({ foodsData, event }: IFoodProps): IFoodPlate => {
+const selectFoodIndex = (event: Event): number => {
+  const urlParts = event.path.split('/');
+  const id = Number(urlParts[urlParts.length - 1]);
+  return storage.findIndex(product => product.id === id);
+};
+
+const deleteFood = (event: Event): IFoodPlate => {
   if (!event.body) return {} as IFoodPlate;
-  const selectedFood = selectFood({ foodsData, event });
+  const selectedFood = selectFood(event);
   if (!selectedFood) return {} as IFoodPlate;
-  foodsData.reduce((prevValue, currentValue) => {
+  storage.reduce((prevValue, currentValue) => {
     if (currentValue.id !== selectedFood.id) {
       prevValue.push(currentValue);
     }
@@ -52,37 +52,34 @@ const deleteFood = ({ foodsData, event }: IFoodProps): IFoodPlate => {
   return {} as IFoodPlate;
 };
 
-const updateFood = ({
-  foodsData,
-  event,
-}: IFoodProps): IFoodPlate[] | IFoodPlate => {
-  if (!event.body) return foodsData;
+const updateFood = (event: Event): IFoodPlate[] | IFoodPlate => {
+  if (!event.body) return storage;
   const food: IFoodPlate = JSON.parse(event.body);
-  const selectedFood = selectFood({ foodsData, event });
-  if (!selectedFood) return foodsData;
-  foodsData.map(foodData => {
-    if (foodData.id === selectedFood.id) {
-      foodData.name = food.name;
-      foodData.image = food.image;
-      foodData.price = food.price;
-      foodData.description = food.description;
-      foodData.available = food.available;
-    }
-    return foodData;
-  });
-  return food;
+  const selectedFood = selectFoodIndex(event);
+  if (selectedFood === -1) return food;
+  storage[selectedFood] = food;
+  return storage[selectedFood];
+};
+
+const initStorage = (): void => {
+  if (!storage.length) {
+    foods.map(food => {
+      storage.push(food);
+    });
+  }
 };
 
 const handler: Handler = async event => {
+  initStorage();
   let response = foods as IFoodPlate[] | IFoodPlate;
   if (event.httpMethod === 'POST') {
-    response = createFood({ foodsData: foods, event });
+    response = createFood(event);
   }
   if (event.httpMethod === 'PUT') {
-    response = updateFood({ foodsData: foods, event });
+    response = updateFood(event);
   }
   if (event.httpMethod === 'DELETE') {
-    response = deleteFood({ foodsData: foods, event });
+    response = deleteFood(event);
   }
   return {
     statusCode: 200,
