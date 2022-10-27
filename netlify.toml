@@ -1,0 +1,14 @@
+[functions]
+  directory = "src/functions"
+[context.production.environment]
+  NODE_ENV = "production"
+[production]
+  command = "yarn start"
+  port = 3333
+  publish = "dist"
+[context.dev.environment]
+  NODE_ENV = "development"
+[dev]
+  command = "yarn start"
+  port = 3333
+  publish = "dist"
